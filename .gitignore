@@ -1,0 +1,13 @@
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Test and packaging output
+.coverage
+*.log
+*.tmp
+.dist/
+release-build/

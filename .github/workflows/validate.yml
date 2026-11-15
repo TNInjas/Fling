@@ -1,0 +1,22 @@
+name: Validate package
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  shell-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check shell syntax
+        run: bash -n install.sh uninstall.sh tests/test-install.sh
+
+      - name: Run installer and uninstaller smoke tests
+        run: bash tests/test-install.sh

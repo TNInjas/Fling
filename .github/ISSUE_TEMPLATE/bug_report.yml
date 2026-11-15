@@ -1,0 +1,45 @@
+name: Bug report
+description: Report a reproducible issue with the package or workflow.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: input
+    id: package-version
+    attributes:
+      label: Package version
+      placeholder: "1.1.0"
+    validations:
+      required: true
+  - type: input
+    id: cli-version
+    attributes:
+      label: Antigravity CLI version
+      placeholder: "1.5.9"
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system and shell
+      placeholder: "Linux distribution, Bash version"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce and sanitized output
+      description: Do not include secrets, credentials, private project contents, or personal data.
+    validations:
+      required: true
