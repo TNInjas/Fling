@@ -1,32 +1,47 @@
-# Source-to-package traceability
+# Source-to-Package Traceability (Fling v2.0.0)
 
-- **Authoritative source:** `docs/Universal Engineering Workflow for Antigravity CLI.pdf`
-- **Workflow specification:** Version 1.1, 20 pages
-**Distribution package:** 1.1.0
+- **Workflow Specification:** Version 2.0 (Agent-agnostic, user-led, AI-assisted)
+- **Authoritative Specification Document:** `AGENTS.md` (Universal Engineering Workflow v2.0 Manual)
+- **Reference Specification PDF:** `docs/Universal Engineering Workflow for Antigravity CLI.pdf` (Version 1.1 foundational reference)
+- **Distribution Package Version:** 2.0.0
 
-The PDF is included unchanged. The operational files translate its rules into Antigravity CLI global instructions and a progressive-disclosure skill.
+This repository translates the Universal Engineering Workflow specification into production configurations, project instructions, progressive-disclosure skills, and integrated subsystems.
 
-| Source content | Package location |
-|---|---|
-| Operating model | `global/AGENTS.md`; Skill section 1 |
-| Universal workflow and task triage | `global/AGENTS.md`; Skill section 2 |
-| Task intake and context acquisition | `global/AGENTS.md`; Skill section 3 |
-| Problem analysis and critical evaluation | Skill section 4 |
-| Research and technical investigation | `global/AGENTS.md`; Skill section 5 |
-| Planning and architecture | `global/AGENTS.md`; Skill section 6 |
-| Controlled implementation and adaptive autonomy | `global/AGENTS.md`; Skill section 7 |
-| Continuous quality assurance | `global/AGENTS.md`; Skill section 8 |
-| Bug resolution and fault isolation | `global/AGENTS.md`; Skill section 9 |
-| User testing and feedback | Skill section 10 |
-| Final review, delivery, and definition of done | `global/AGENTS.md`; Skill section 11 |
-| Specialized workflows | Skill section 12 |
-| EGM integration and fallback | Skill section 13; `docs/PLUGIN-INTEGRATION.md` |
-| Resource management | `global/AGENTS.md`; Skill section 14 |
-| Permission and Git policy | `global/AGENTS.md`; Skill section 15 |
-| Persistent context architecture and project structure | `global/AGENTS.md`; Skill section 16; `templates/` |
-| Master operating instructions | `global/AGENTS.md`; Skill section 17 |
-| Three-level deployment architecture | `global/AGENTS.md`; Skill section 18; `docs/ARCHITECTURE.md` |
-| Design principle and success criteria | Skill section 19 |
-| Capability boundary | Skill section 20; `README.md`; `docs/COMPATIBILITY.md` |
+---
 
-The global rules are deliberately concise. The complete procedure is in the skill so the agent can load the detailed workflow when the skill is relevant.
+## Architecture Component Mapping
+
+| Subsystem / Layer | Component Function | Package & File Location | Upstream Traceability & Origin |
+|---|---|---|---|
+| **UEW Core (v2.0)** | Master Operating Manual | `AGENTS.md` | Fling UEW v2.0 Specification |
+| **UEW Core (v2.0)** | Global Machine-Level Rules | `global/AGENTS.md` | Derived from `AGENTS.md` Section 10 |
+| **UEW Core (v2.0)** | Progressive Workflow Skill | `skills/universal-engineering/SKILL.md` | Fling UEW Core |
+| **UEW Core (v2.0)** | Standalone Distribution Scripts | `install.sh`, `uninstall.sh`, `tests/test-install.sh` | Fling Core distribution |
+| **UEW Core (v2.0)** | Project & Task Templates | `templates/project-agent/AGENTS.md`, `templates/task-artifacts/` | Fling Core templates |
+| **Understand-Anything** | Knowledge Engine Monorepo | `subsystems/understand-anything/` | Upstream: Egonex-AI/Understand-Anything (`bb70fdb`, v2.9.8) |
+| **Understand-Anything** | Core Analysis Engine | `subsystems/understand-anything/packages/core/` | Customized (Targets 2, 4, 5, 6, 7, 8) |
+| **Understand-Anything** | Expanded MCP Server | `subsystems/understand-anything/packages/mcp/` | Customized (Target 1: programmatic graph & build tools) |
+| **Understand-Anything** | Standalone Viewer & SSE Server | `subsystems/understand-anything/packages/viewer/` | Customized (Target 9: `/api/events` live-sync) |
+| **Understand-Anything** | Interactive Graph Dashboard | `subsystems/understand-anything/packages/dashboard/` | Customized (Target 9: React + Vite + useLiveSync) |
+| **Understand-Anything** | Subsystem Operating Rules | `subsystems/understand-anything/AGENTS.md` | Target 10: Subsystem boundary governance |
+| **Ponytail** | Implementation Methodology | `subsystems/ponytail/upstream/` | Upstream: DietrichGebert/ponytail (`96608e0`, v5.3.3) |
+| **Ponytail** | Integration Metadata | `subsystems/ponytail/UPSTREAM.md` | Fling integration documentation |
+| **Ponytail** | Project-Level Always-On Rules | `.agents/rules/ponytail.md` | Antigravity `.agents/rules/` discovery |
+| **Workspace Orchestration** | Monorepo Configuration | `package.json`, `pnpm-workspace.yaml`, `pnpm-lock.yaml` | Fling Workspace integration |
+| **Third-Party Compliance** | Licensing & Attribution | `LICENSE`, `THIRD-PARTY-NOTICES.md` | MIT License compliance across all components |
+
+---
+
+## Customization Delta (Understand-Anything)
+
+The Understand-Anything subsystem includes 10 target improvements implemented in commit `2b23877` (54 files, 5,315 insertions):
+1. **Target 1:** Expanded Model Context Protocol (MCP) server (`packages/mcp/lib/expanded-tools.mjs`).
+2. **Target 2:** Decoupled analysis pipeline (`ProjectScanner`, `BatchCoordinator`, `GraphAssembler`, `IncrementalReconciler`).
+3. **Target 3:** Unified `AnalysisOrchestrator` with Antigravity native subagent delegation and Heuristic fallback.
+4. **Target 4:** High-performance `GraphNavigator` and `Pathfinder` with bidirectional BFS and cycle detection.
+5. **Target 5:** Git diff reconciliation and uncommitted change tracking (`LifecycleManager`).
+6. **Target 6:** Atomic PID locking (`GraphLockManager`), 5-slot snapshot ring buffer (`SnapshotManager`), and invalid candidate quarantine.
+7. **Target 7:** Content-addressable SHA-256 cache (`ContentCache`) and prompt compression (`PromptCompressor`).
+8. **Target 8:** Path traversal sanitization (`PathValidator`) and credential redacting (`SecretRedactor`).
+9. **Target 9:** Standalone HTTP viewer with Server-Sent Events (SSE) `/api/events` live synchronization.
+10. **Target 10:** Dedicated subsystem operating instructions (`AGENTS.md`) and runbook (`docs/uew-integration.md`).

@@ -1,8 +1,10 @@
-name: Validate package
+name: Validate Fling Framework
 
 on:
   push:
+    branches: [ main, integrate/* ]
   pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
@@ -10,13 +12,46 @@ permissions:
 
 jobs:
   shell-tests:
+    name: Package Smoke Tests (POSIX Shell)
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Check shell syntax
+      - name: Check shell script syntax
         run: bash -n install.sh uninstall.sh tests/test-install.sh
 
       - name: Run installer and uninstaller smoke tests
         run: bash tests/test-install.sh
+
+  subsystem-tests:
+    name: Subsystem & Unit Tests (Node / pnpm)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build core and viewer assets
+        run: |
+          pnpm run prepare
+          pnpm run build
+
+      - name: Run UA Core unit tests
+        run: pnpm run test:ua:core
+
+      - name: Run UA Dashboard unit tests
+        run: pnpm run test:ua:dashboard

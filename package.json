@@ -1,10 +1,18 @@
 {
   "name": "fling",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "Universal Engineering Workflow with integrated Understand-Anything knowledge engine subsystem",
+  "description": "Fling: Universal Engineering Workflow (UEW) v2.0 with integrated Understand-Anything knowledge engine and Ponytail implementation methodology",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TNInjas/Fling.git"
+  },
+  "homepage": "https://github.com/TNInjas/Fling#readme",
+  "bugs": {
+    "url": "https://github.com/TNInjas/Fling/issues"
+  },
   "scripts": {
     "prepare": "pnpm --filter @understand-anything/core build",
     "build": "pnpm -r build",
