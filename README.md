@@ -1,4 +1,4 @@
-# Fling: Universal Engineering Workflow (UEW) v2.0
+# Fling
 
 > **A user-led, AI-assisted engineering framework integrating governance, codebase intelligence, and implementation discipline.**
 
@@ -179,7 +179,7 @@ pnpm run prepare
 pnpm run build
 ```
 
-### 3. Install Global UEW Instructions (Antigravity CLI)
+### 3. Install Global Instructions (Antigravity CLI)
 ```bash
 # Preview target installation paths (dry run)
 ./install.sh --dry-run
@@ -188,10 +188,49 @@ pnpm run build
 ./install.sh
 ```
 
-### 4. Install Ponytail CLI Plugin
-```bash
-agy plugin install https://github.com/DietrichGebert/ponytail
-```
+### 4. Install Recommended Companion Repositories & Tooling
+To unlock Fling's full capability spectrum—including structured specification design, independent AI code reviews, implementation minimalism, and comprehensive software engineering skills—install these official companion repositories and plugins:
+
+#### A. Elephant & Goldfish Model (EGM)
+EGM provides multi-persona specification design, adversarial stress-testing, brainstorming (`/egm:egm-brainstorm`), documentation bootstrap (`/egm:egm-bootstrap`), and architecture drift reviews.
+- **Repository:** [`https://github.com/google/elephant-goldfish-model`](https://github.com/google/elephant-goldfish-model)
+- **Installation in Antigravity CLI:**
+  ```bash
+  agy plugin install https://github.com/google/elephant-goldfish-model
+  ```
+
+#### B. CodeRabbit (AI Code Review)
+CodeRabbit provides automated, high-signal pre-merge reviews for pull requests and local uncommitted changes, as well as safe autofixing.
+- **Agent Skills Plugin Repository:** [`https://github.com/coderabbitai/skills`](https://github.com/coderabbitai/skills)
+- **CLI Documentation & Binary:** [`https://github.com/coderabbitai/coderabbit-cli`](https://github.com/coderabbitai/coderabbit-cli)
+- **Setup & Authentication:**
+  ```bash
+  # 1. Install CodeRabbit CLI
+  curl -fsSL https://coderabbit.ai/install.sh | sh
+  # (Alternatively on macOS / Linux Homebrew: brew install coderabbitai/tap/coderabbit)
+
+  # 2. Authenticate the CLI
+  coderabbit login
+
+  # 3. Install CodeRabbit Skills Plugin in Antigravity
+  agy plugin install https://github.com/coderabbitai/skills
+  ```
+
+#### C. Ponytail (Minimalist Implementation Methodology)
+Enforces minimal viable diffs, anti-overengineering heuristics, and standard library reuse.
+- **Repository:** [`https://github.com/DietrichGebert/ponytail`](https://github.com/DietrichGebert/ponytail)
+- **Installation in Antigravity CLI:**
+  ```bash
+  agy plugin install https://github.com/DietrichGebert/ponytail
+  ```
+
+#### D. Agent Skills (General Engineering Skills Suite)
+Provides 25+ specialized agent capabilities including TDD, API design, security hardening, performance profiling, and browser devtools testing.
+- **Repository:** [`https://github.com/addyosmani/agent-skills`](https://github.com/addyosmani/agent-skills)
+- **Installation in Antigravity CLI:**
+  ```bash
+  agy plugin install https://github.com/addyosmani/agent-skills
+  ```
 
 ### 5. Verify the Installation
 ```bash
@@ -358,7 +397,7 @@ Contributions are welcomed. Please review [`CONTRIBUTING.md`](CONTRIBUTING.md) f
 
 ## 15. License and Third-Party Notices
 
-- **Fling Core:** Released under the [MIT License](LICENSE) &copy; 2026 Tanay Soni and Fling Contributors.
+- **Fling:** Released under the [MIT License](LICENSE) &copy; 2026 Tanay Soni and Fling Contributors.
 - **Understand-Anything Subsystem:** MIT License &copy; 2026 Egonex AI and Understand-Anything Contributors.
 - **Ponytail Subsystem:** MIT License &copy; 2026 Dietrich Gebert.
 - Complete licensing terms and attribution are documented in [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) and [`SOURCE-TRACEABILITY.md`](SOURCE-TRACEABILITY.md).
@@ -367,6 +406,9 @@ Contributions are welcomed. Please review [`CONTRIBUTING.md`](CONTRIBUTING.md) f
 
 ## 16. Acknowledgements
 
+- **Google** for the [Elephant & Goldfish Model (EGM)](https://github.com/google/elephant-goldfish-model) specification design framework.
+- **CodeRabbit** for the [CodeRabbit Skills](https://github.com/coderabbitai/skills) AI code review platform.
 - **Dietrich Gebert** for creating [Ponytail](https://github.com/DietrichGebert/ponytail) and championing minimalism in software development.
+- **Addy Osmani** for the [Agent Skills](https://github.com/addyosmani/agent-skills) suite.
 - **Egonex AI** and the [Understand-Anything](https://github.com/Egonex-AI/Understand-Anything) community for the foundational knowledge graph architecture.
 - **Google DeepMind** for the Antigravity CLI environment and customization architecture.

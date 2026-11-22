@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "Fling: Universal Engineering Workflow (UEW) v2.0 with integrated Understand-Anything knowledge engine and Ponytail implementation methodology",
+  "description": "Fling — A user-led, AI-assisted engineering framework integrating governance, codebase intelligence, and implementation discipline",
   "license": "MIT",
   "repository": {
     "type": "git",
