@@ -38,11 +38,12 @@ The user provides the task, objectives, requirements, expected behaviour, constr
 
 Before acting:
 1. Read the user's instructions and relevant project documentation.
-2. Inspect the relevant repository areas and identify affected components.
-3. Understand current architecture and implementation before proposing changes.
-4. Check dependencies, tests, current Git branch, uncommitted changes, and relevant diffs so unrelated work is not overwritten or mixed into the task.
-5. Confirm the delivery destination: local only, branch, or PR.
-6. Identify missing or ambiguous requirements.
+2. Check for existing architectural knowledge: if the repository contains an Understand-Anything knowledge graph (`.ua/` or `.understand-anything/`), check if the MCP knowledge server tools (`understand_query_graph`, `understand_get_subgraph`) or internal APIs are available. If available, perform targeted retrieval to inspect architectural layers, callers, and dependencies before reading extensive raw files; if the graph exists but the tools are unavailable, inspect the existing graph file directly (`.ua/knowledge-graph.json` or `.understand-anything/knowledge-graph.json` depending on which directory exists) or rely on project documentation. Do not run unconditional full analysis at session start; perform targeted analysis only when knowledge is absent or stale.
+3. Inspect the relevant repository areas and identify affected components.
+4. Understand current architecture and implementation before proposing changes.
+5. Check dependencies, tests, current Git branch, uncommitted changes, and relevant diffs so unrelated work is not overwritten or mixed into the task.
+6. Confirm the delivery destination: local only, branch, or PR.
+7. Identify missing or ambiguous requirements.
 
 If something is incomplete or ambiguous, ask the user. Do not invent requirements. Group related questions into one batch. Minor, reversible assumptions may be made only if stated explicitly.
 
@@ -67,12 +68,13 @@ Challenge weak reasoning with evidence and alternatives; do not simply agree. Ex
 When research is necessary, behave like a technical researcher:
 
 1. Understand the research problem and its complete context.
-2. Design a research plan, categorizing investigations through EGM where useful.
-3. Research official documentation, existing implementations, relevant repositories, libraries, specifications, and technical literature.
-4. Compare possible approaches.
-5. Conduct small experiments or proof-of-concepts when useful.
-6. Evaluate compatibility, performance, maintainability, security, licensing, and resource requirements.
-7. Present verified findings, uncertainty, contradictions, and recommendations.
+2. Leverage the architectural knowledge engine when available: trace upstream callers, downstream dependencies, and dependency neighborhoods (`understand_find_path`, `understand_get_subgraph`, or internal GraphNavigator/Pathfinder). Check for potential circular dependencies before modifying core interfaces. If the knowledge engine is absent or unavailable, conduct source-based dependency tracing via text search, import maps, and manual AST inspection.
+3. Design a research plan, categorizing investigations through EGM where useful.
+4. Research official documentation, existing implementations, relevant repositories, libraries, specifications, and technical literature.
+5. Compare possible approaches.
+6. Conduct small experiments or proof-of-concepts when useful.
+7. Evaluate compatibility, performance, maintainability, security, licensing, and resource requirements.
+8. Present verified findings, uncertainty, contradictions, and recommendations.
 
 Research depth scales with complexity and risk.
 
@@ -104,7 +106,8 @@ For each logical step:
 3. Implement the smallest effective change.
 4. Run relevant checks.
 5. Inspect the resulting diff.
-6. Update task progress.
+6. Synchronize architectural memory: when the knowledge engine is present, identify modified files and perform incremental graph updates (`understand_sync_incremental`, the `/understand` skill, or internal `IncrementalReconciler`). For bounded multi-file analysis, follow the native delegation model: the primary agent spawns bounded native subagents via host CLI, subagents return structured results, and the centralized UA core validates schemas, redacts secrets, and persists changes under atomic locks.
+7. Update task progress.
 
 Use adaptive autonomy:
 
@@ -123,7 +126,8 @@ Never independently execute an unapproved recommendation.
 QA happens throughout development, not just at the end:
 - Test each logical implementation step.
 - Check edge cases and failure conditions.
-- Inspect integration boundaries.
+- Inspect integration boundaries and architectural layer adherence.
+- Verify dependency constraints and check for newly introduced circular dependencies (using the knowledge engine's `understand_find_path` with cycle detection when available, or manual dependency graph inspection otherwise).
 - Look for regressions.
 - Validate adherence to the approved plan.
 - Protect secrets and sensitive configuration.
@@ -258,6 +262,7 @@ Permission is contextual. Approval for one task does not authorize unrelated ope
 
 Use a hierarchy rather than one enormous context document. Reload the highest-priority context first when context is limited:
 
+0. **Architectural memory (`.ua/knowledge-graph.json` or `.understand-anything/knowledge-graph.json`):** Machine-indexed semantic graph of codebase components, call paths, dependency layers, and complexity metrics. Protected by atomic file writes (`atomicWriteFileSync`), process locking (`GraphLockManager`), and a 5-slot snapshot ring buffer (`.ua/snapshots/` via `SnapshotManager`).
 1. **Active task state:** Current step, completed work, blockers, pending decisions, and next action.
 2. **Project knowledge:** Architecture, requirements, constraints, dependencies, and component relationships.
 3. **Decision history:** Approved decisions, alternatives considered, and reasons.
@@ -268,6 +273,9 @@ Suggested project structure (adapt it to the repository; do not create unnecessa
 
 ```text
 project/
+├── .ua/
+│   ├── knowledge-graph.json
+│   └── snapshots/
 ├── AGENTS.md
 ├── README.md
 ├── docs/
@@ -307,7 +315,7 @@ On failure, isolate affected operations, keep independent work running when safe
 ### Persistent context, Git, and final delivery
 Keep active task state, project knowledge, decision history, global rules, and session handover current. Avoid duplicate documentation and keep `.agent/` working notes out of commits unless requested. Inspect Git status/history/diffs before modification. Ask before push/PR unless authorized. Explicit permission is required for merge, release, force-push, history rewrite, destructive Git actions, and remote branch deletion.
 
-Before completion, run tests, independent review where appropriate, security checks, secret checks, final diff review, and documentation updates. Report what changed and why, verification, decisions, limitations, remaining issues, and shipping status. A task is complete when implemented, verified, and shipped to the agreed destination. If blocked, say it is implemented but not shipped.
+Before completion, run tests, independent review where appropriate, security checks, secret checks, final diff review, and documentation updates. When the knowledge engine is present and available, check whether architectural memory maintenance is pending and update incrementally if code changes occurred; never run unconditional full analysis at session start or end. Report what changed and why, verification, decisions, limitations, remaining issues, and shipping status. A task is complete when implemented, verified, and shipped to the agreed destination. If blocked, say it is implemented but not shipped.
 
 ## 18. Deployment architecture
 

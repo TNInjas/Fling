@@ -1,0 +1,28 @@
+{
+  "name": "fling",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Universal Engineering Workflow with integrated Understand-Anything knowledge engine subsystem",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "pnpm --filter @understand-anything/core build",
+    "build": "pnpm -r build",
+    "test": "npm run test:uew && npm run test:ua",
+    "test:uew": "./tests/test-install.sh",
+    "test:ua": "pnpm --dir subsystems/understand-anything test",
+    "test:ua:core": "pnpm --filter @understand-anything/core test",
+    "test:ua:dashboard": "pnpm --filter @understand-anything/dashboard test",
+    "dev:dashboard": "pnpm --filter @understand-anything/dashboard dev",
+    "lint": "pnpm --dir subsystems/understand-anything lint"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "ajv": "8.17.1",
+    "eslint": "^9.0.0",
+    "globals": "^17.6.0",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^3.1.0"
+  }
+}

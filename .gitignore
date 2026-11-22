@@ -7,7 +7,31 @@ Thumbs.db
 
 # Test and packaging output
 .coverage
+coverage/
+benchmark-results/
 *.log
 *.tmp
 .dist/
 release-build/
+
+# Node and workspace dependencies
+node_modules/
+dist/
+.pnpm-store/
+*.tsbuildinfo
+*.tgz
+
+# Knowledge engine and cache directories
+.understand-anything/
+.ua/
+.worktrees/
+.claude/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment files
+.env
+.env.*

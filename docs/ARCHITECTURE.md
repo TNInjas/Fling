@@ -26,6 +26,16 @@ It should be adapted to an existing repository, not copied blindly over existing
 
 EGM and CodeRabbit can provide specialized research, specification, and review capabilities when installed and authorized. The workflow must check actual availability and invocation details rather than assuming them.
 
+## 6. Knowledge engine subsystem (`subsystems/understand-anything/`)
+
+Understand-Anything (UA) serves as the persistent architectural memory and semantic code graph engine for UEW:
+
+- **Operational Boundary:** UEW Core handles workflow governance, task triage, approval boundaries, agent authority, and delivery. UA handles structural/semantic analysis, AST extraction, indexed graph storage, k-hop dependency retrieval, change-impact analysis, and visual dashboard presentation.
+- **Shared Core Implementation:** Both MCP tools and internal programmatic APIs execute against the single underlying `@understand-anything/core` engine.
+- **Native Subagent Delegation:** UA's `AnalysisOrchestrator` generates modular analysis tasks for native CLI subagents (Antigravity, Claude Code, Codex, or Heuristic). The primary agent coordinates subagents; subagents return structured JSON; the orchestrator centrally validates schemas, redacts secrets, and persists changes under atomic PID locks.
+- **Resilience & Snapshots:** Retains the last 5 successful graph snapshots (`.ua/snapshots/`), locks mutations atomically, and isolates invalid candidate payloads (`.ua/failed-update-...`) without corrupting the production graph.
+- **Interactive Visual Dashboard:** A standalone HTTP viewer provides real-time graph visualization and Server-Sent Events (SSE) live updates on `/api/events`.
+
 ## Runtime flow
 
 ```text

@@ -13,6 +13,7 @@ The workflow specification is **Version 1.1**. This repository is the first publ
 - **Specialized task flows** for new projects, features, bug fixing, research, refactoring, security reviews, maintenance, performance optimization, and GitHub contributions.
 - **EGM and CodeRabbit integration guidance** that treats these as optional capabilities and requires the agent to verify that they are actually available.
 - **Project and task templates** for project-specific instructions, active task state, and session handover.
+- **Understand-Anything Knowledge Engine Subsystem** (`subsystems/understand-anything/`) providing persistent architectural memory, AST code graphs, dependency pathfinding, incremental git diff reconciliation, and an interactive live dashboard.
 - The original 20-page **Version 1.1 workflow specification PDF**, included unchanged.
 
 ## Operating principle
@@ -125,10 +126,20 @@ See [`docs/COMPATIBILITY.md`](docs/COMPATIBILITY.md) for the boundaries and manu
 │   ├── INSTALLATION.md
 │   ├── COMPATIBILITY.md
 │   ├── ARCHITECTURE.md
+│   ├── UNDERSTAND-ANYTHING.md
 │   └── PLUGIN-INTEGRATION.md
+├── subsystems/
+│   └── understand-anything/
+│       ├── packages/ (core, mcp, viewer, dashboard)
+│       ├── skills/
+│       ├── agents/
+│       ├── tests/
+│       └── AGENTS.md
 ├── tests/test-install.sh
 ├── install.sh
-└── uninstall.sh
+├── uninstall.sh
+├── package.json
+└── pnpm-workspace.yaml
 ```
 
 ## Design constraints
